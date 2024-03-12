@@ -1,110 +1,160 @@
-// vars for dropdown menu
-const dropdownMenu = document.getElementById('dropdown-menu');
-const dropdownItems = document.querySelectorAll('.dropdown__item');
-const selectedMeridiem = document.getElementById('selected-meridiem');
-const dropdownTrigger = document.getElementById('dropdown-trigger');
-const dropdownArrow = document.getElementById('dropdown-arrow');
-// vars for number picker
-const numberOfPeople = document.getElementById('number-of-people');
-const minusButton = document.getElementById('minus');
-const plusButton = document.getElementById('plus');
-//vars for reservationButton
-const reservationButton = document.getElementById('btn-reservation');
-//vars for form elements
-const name = document.querySelector("input[name='name']");
-const email = document.querySelector("input[name='email']");
-const month = document.querySelector("input[name='month']");
-const day = document.querySelector("input[name='day']");
-const year = document.querySelector("input[name='year']");
-const hour = document.querySelector("input[name='hour']");
-const minute = document.querySelector("input[name='minute']");
-const errors = document.querySelectorAll('p.errormsg');
-const inputboxes = document.querySelectorAll('input.input-box');
-const datetimeFields = document.querySelectorAll('p.datetime-field-name');
+// Variables Function Name and Email
+const nameWrapper = document.getElementById("name-wrapper");
+const nameError = document.getElementById("error-name");
 
-dropdownTrigger.onclick = () => {
-  dropdownMenu.classList.toggle('open');
-  dropdownArrow.classList.toggle('open');
-}
+const emailWrapper = document.getElementById("email-wrapper");
+const emailError = document.getElementById("error-email");
 
-dropdownItems.forEach(item => {  
-  item.onclick = () => {
-    selectedMeridiem.textContent = item.children[1].textContent;
-    // remove the old checked class
-    dropdownItems.forEach(oldItem => {
-      oldItem.children[0].classList.remove('checked');
-    });
-    // add the checked class to current clicked item
-    item.children[0].classList.add('checked');
+// Variables Function Date and Time
+const dateWrapper = document.getElementById("date-wrapper");
+const dateError = document.getElementById("error-date");
+const datePastError = document.getElementById("error-past-date");
+
+const timeWrapper = document.getElementById("time-wrapper");
+const timeError = document.getElementById("error-time");
+
+let futureDate = true;
+
+function checkFutureDate() {
+  let month = document.getElementById("month").value;
+  let day = document.getElementById("day").value;
+  let year = document.getElementById("year").value;
+
+  let currentDay = new Date().getDate();
+  let currentMonth = new Date().getMonth() + 1;
+
+  if ((month < currentMonth) & (day < currentDay)) {
+    dateWrapper.classList.add("change");
+    datePastError.classList.remove("hidden");
+    dateError.classList.add("hidden");
+    futureDate = false;
   }
-});
 
-minusButton.onclick = () => changeNumberOfPeople(false);
-plusButton.onclick = () => changeNumberOfPeople(true);
-
-function changeNumberOfPeople(isPlus) {
-  let currentNumberOfPeople = parseInt(numberOfPeople.textContent);
-  if (isPlus) {
-    numberOfPeople.textContent = currentNumberOfPeople + 1;
-  } else {
-    if (currentNumberOfPeople != 1) {
-      numberOfPeople.textContent = currentNumberOfPeople - 1;
-    }
+  if (month == "" || day == "" || year == "") {
+    datePastError.classList.add("hidden");
+    dateError.classList.remove("hidden");
   }
 }
 
-reservationButton.onclick = () => {
-  formValidate();
+// Validation Function Name and Email
+function validateForm() {
+  let valid = true;
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+  let month = document.getElementById("month").value;
+  let day = document.getElementById("day").value;
+  let year = document.getElementById("year").value;
+  let hour = document.getElementById("hour").value;
+  let minute = document.getElementById("minute").value;
+  let pmAm = document.getElementById("am_pm").value;
+
+  if (name == "") {
+    nameWrapper.classList.add("change");
+    nameError.classList.remove("hidden");
+    valid = false;
+  }
+
+  if (email == "") {
+    emailWrapper.classList.add("change-email");
+    emailError.classList.remove("hidden");
+    valid = false;
+  }
+
+  if (month == "" || day == "" || year == "") {
+    dateWrapper.classList.add("change");
+    dateError.classList.remove("hidden");
+    valid = false;
+  }
+
+  if (hour == "" || minute == "") {
+    timeWrapper.classList.add("change");
+    timeError.classList.remove("hidden");
+    valid = false;
+  }
+
+  checkFutureDate();
+
+  if (!futureDate) {
+    valid = false;
+  }
+  return valid;
 }
 
-function formValidate() {
-  if (name.value == '') {
-    errors[0].classList.add('show');
-    inputboxes[0].classList.add('error');
+// Min and Max Year to choose
+const year = document.getElementById("year");
+
+const today = new Date().getFullYear();
+const future = new Date().getFullYear() + 1;
+
+year.setAttribute("min", today);
+year.setAttribute("max", future);
+
+// Increase and Decrease people reservation
+const minusBtn = document.getElementById("minus");
+const plusBtn = document.getElementById("plus");
+const numPeople = document.getElementById("num-people");
+const errorPeople = document.getElementById("error-num-people");
+
+function totalClick(click) {
+  const sumvalue = parseInt(numPeople.innerText) + click;
+  numPeople.innerText = sumvalue;
+
+  // avoid negatives
+  if (sumvalue < 0) {
+    numPeople.innerText = 0;
+    errorPeople.classList.add("hidden");
   }
-  if (email.value == '') {
-    errors[1].classList.add('show');
-    inputboxes[1].classList.add('error');
+  if (sumvalue > 30) {
+    numPeople.innerText = 30;
+    errorPeople.classList.remove("hidden");
   }
-  if (month.value == '' || day.value == '' || year.value == '') {
-    errors[2].classList.add('show');
-    datetimeFields[0].classList.add('error');
-    if (month.value == '') {
-      inputboxes[2].classList.add('error');
-    }
-    if (day.value == '') {
-      inputboxes[3].classList.add('error');
-    }
-    if (year.value == '') {
-      inputboxes[4].classList.add('error');
-    }
-  }
-  if (hour.value == '' || minute.value == '') {
-    errors[3].classList.add('show');
-    datetimeFields[1].classList.add('error');
-    if (hour.value == '') {
-      inputboxes[5].classList.add('error');
-    }
-    if (minute.value == '') {
-      inputboxes[6].classList.add('error');
-    }
+  if (sumvalue < 30) {
+    errorPeople.classList.add("hidden");
   }
 }
 
-inputboxes.forEach((box, i) => {
-  // remove error status when focus
-  box.onfocus = () => {
-    box.classList.remove('error');
-    if (i == 0) {
-      errors[0].classList.remove('show');
-    } else if (i == 1) {
-      errors[1].classList.remove('show');
-    } else if (i > 1 && i < 5) {
-      errors[2].classList.remove('show');
-      datetimeFields[0].classList.remove('error');
-    } else {
-      errors[3].classList.remove('show');
-      datetimeFields[1].classList.remove('error');
-    }
+const modalContainer = document.getElementById("modal-container");
+const reservationButton = document.querySelector(".reservation-btn");
+
+function showModal() {
+  modalContainer.style.display = "flex";
+}
+
+function hideModal() {
+  modalContainer.style.display = "none";
+}
+
+reservationButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  if (validateForm()) {
+    // Get input values
+    const name = document.getElementById("name").value;
+    const month = document.getElementById("month").value;
+    const day = document.getElementById("day").value;
+    const year = document.getElementById("year").value;
+    const hour = document.getElementById("hour").value;
+    const minute = document.getElementById("minute").value;
+    const amPm = document.getElementById("am_pm").value; // Get AM/PM value
+    const numPeople = document.getElementById("num-people").innerText;
+    const email = document.getElementById("email").value;
+
+    // Update modal content
+    const modalName = document.querySelector(".modal-name");
+    modalName.innerText = name;
+
+    const modalDate = document.querySelector(".modal-date");
+    modalDate.innerText = `${month}/${day}/${year}`;
+
+    const modalTime = document.querySelector(".modal-time");
+    modalTime.innerText = `${hour}:${minute} ${amPm}`; // Include AM/PM value
+
+    const modalPeople = document.querySelector(".modal-people");
+    modalPeople.innerText = numPeople;
+
+    const modalEmail = document.querySelector(".modal-email");
+    modalEmail.innerText = email;
+
+    showModal();
+    setTimeout(hideModal, 3000);
   }
 });

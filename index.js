@@ -1,68 +1,78 @@
-const slideImage = document.getElementById('slide-image');
-const slideTitle = document.getElementById('slide-title');
-const slideContent = document.getElementById('slide-content');
-const events = document.querySelectorAll('li.gathering__event');
-const underlines = document.querySelectorAll('div.gathering__event__underline');
+// Section 3 Menu Variables
+// Menu Button variables
+const familyMenuBtn = document.querySelector(".menu-text-family");
+const specialMenuBtn = document.querySelector(".menu-text-special");
+const socialMenuBtn = document.querySelector(".menu-text-social");
 
-const breakPoints = [767, 1200];
-const windowSize = window.innerWidth;
+// Image Change variable
+const imageChange = document.querySelector(".section-3-family-img");
 
-const slides = [
-  {
-    'name': 'Family Gathering',
-    'content': 'We love catering for entire families. So please bring everyone along for a special meal with your loved ones. We’ll provide a memorable experience for all.',
-    'image': 'https://d3dyfaf3iutrxo.cloudfront.net/general/upload/91dc67ff4d9442c39be07317215f2557.jpg'
-  },
-  {
-    'name': 'Special Events',
-    'content': 'Whether it’s a romantic dinner or special date you’re celebrating with others we’ll look after you. We’ll be sure to mark your special date with an unforgettable meal.',
-    'image': './images/homepage/special-events-'
-  },
-  {
-    'name': 'Social Events',
-    'content': 'Are you looking to have a larger social event? No problem! We’re more than happy to cater for big parties. We’ll work with you to make your event a hit with everyone.',
-    'image': './images/homepage/social-events-'
-  }
-];
-const imageUrlSuffixes = ['mobile@2x.jpg', 'tablet@2x.jpg', 'desktop@2x.jpg'];
+// Content to change variables
+const familyContent = document.querySelector(".section-3-family-content");
+const specialContent = document.querySelector(".section-3-special-content");
+const socialContent = document.querySelector(".section-3-social-content");
 
-let suffix = 0;
-console.log('current size: ', windowSize);
-if (windowSize > breakPoints[0] && windowSize < breakPoints[1]) {
-  suffix = 1;
-}
-else if (windowSize > breakPoints[1]) {
-  suffix = 2;
-}
-console.log('suffix: ', suffix);
+// Line Variables
+const familyLine = document.querySelector(".line-family");
+const specialLine = document.querySelector(".line-special");
+const socialLine = document.querySelector(".line-social");
 
-slideImage.innerHTML = "";
-slideImage.appendChild(generateImageComponent(0, suffix));
-events[0].classList.add('active');
-underlines[0].classList.add('active');
+const familyMenuText = document.querySelector(".menu-text-family");
 
-let slide = 1;
-// changing image url
-setInterval(() => {
-  slideImage.innerHTML = "";
-  slideImage.appendChild(generateImageComponent(slide, suffix));
-  changeInnerText(slide);
-  events[slide].classList.add('active');
-  underlines[slide].classList.add('active');
-  events.forEach((event, i) => { if (i != slide) event.classList.remove('active'); })
-  underlines.forEach((underline, i) => { if (i != slide) underline.classList.remove('active'); })
-  if (slide == (slides.length - 1)) slide = 0; else slide++; // reset slide number
-}, 5000);
+// Section 3 Menu Functions
+function familyBtnChanges() {
+  familyContent.classList.remove("hidden");
+  specialContent.classList.add("hidden");
+  socialContent.classList.add("hidden");
 
-function generateImageComponent(slide, suffix) {
-  let newImage = document.createElement("img");
-  newImage.setAttribute("class", "gathering__slide__image-container__image");
-  newImage.setAttribute("src", slides[slide].image.concat(imageUrlSuffixes[suffix]));
-  newImage.setAttribute("alt", "slider image");
-  return newImage;
+  familyLine.classList.add("change");
+  specialLine.classList.remove("change");
+  socialLine.classList.remove("change");
+
+  familyMenuText.style.opacity = 1;
+  imageChange.style.backgroundImage =
+    "url(./images/homepage/family-gathering-desktop.jpg)";
 }
 
-function changeInnerText(slide) {
-  slideTitle.textContent = slides[slide].name;
-	slideContent.textContent = slides[slide].content;
+function specialBtnChanges() {
+  familyContent.classList.add("hidden");
+  specialContent.classList.remove("hidden");
+  socialContent.classList.add("hidden");
+
+  familyLine.classList.remove("change");
+  specialLine.classList.add("change");
+  socialLine.classList.remove("change");
+
+  familyMenuText.style.opacity = 0.5;
+
+  imageChange.style.backgroundImage =
+    "url(./images/homepage/special-events-desktop.jpg)";
 }
+
+function socialBtnChanges() {
+  familyContent.classList.add("hidden");
+  specialContent.classList.add("hidden");
+  socialContent.classList.remove("hidden");
+
+  familyLine.classList.remove("change");
+  specialLine.classList.remove("change");
+  socialLine.classList.add("change");
+
+  familyMenuText.style.opacity = 0.5;
+
+  imageChange.style.backgroundImage =
+    "url(./images/homepage/social-events-desktop.jpg)";
+}
+
+// Section 3 Event Listeners
+familyMenuBtn.addEventListener("click", () => {
+  familyBtnChanges();
+});
+
+specialMenuBtn.addEventListener("click", () => {
+  specialBtnChanges();
+});
+
+socialMenuBtn.addEventListener("click", () => {
+  socialBtnChanges();
+});
