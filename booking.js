@@ -159,12 +159,10 @@ reservationButton.addEventListener("click", function(event) {
   }
 });
 
-// Contact Form Submission
-const contactForm = document.getElementById("contactForm");
 
+const contactForm = document.getElementById("contactForm");
 contactForm.addEventListener("submit", function(event) {
-  event.preventDefault(); // Prevent form submission
-  
-  // Display alert message
+  event.preventDefault();
   alert("Form Submitted successfully!");
+  contactForm.reset()
 });

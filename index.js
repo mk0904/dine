@@ -85,4 +85,5 @@ contactForm.addEventListener("submit", function(event) {
   
   // Display alert message
   alert("Form submitted successfully!");
+  contactForm.reset()
 });
