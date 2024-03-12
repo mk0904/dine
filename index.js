@@ -76,3 +76,13 @@ specialMenuBtn.addEventListener("click", () => {
 socialMenuBtn.addEventListener("click", () => {
   socialBtnChanges();
 });
+
+// Contact Form Submission
+const contactForm = document.getElementById("contactForm");
+
+contactForm.addEventListener("submit", function(event) {
+  event.preventDefault(); // Prevent form submission
+  
+  // Display alert message
+  alert("Form submitted successfully!");
+});

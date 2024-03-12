@@ -158,3 +158,13 @@ reservationButton.addEventListener("click", function(event) {
     setTimeout(hideModal, 3000);
   }
 });
+
+// Contact Form Submission
+const contactForm = document.getElementById("contactForm");
+
+contactForm.addEventListener("submit", function(event) {
+  event.preventDefault(); // Prevent form submission
+  
+  // Display alert message
+  alert("Form Submitted successfully!");
+});
