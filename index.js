@@ -1,25 +1,20 @@
-// Section 3 Menu Variables
-// Menu Button variables
+
 const familyMenuBtn = document.querySelector(".menu-text-family");
 const specialMenuBtn = document.querySelector(".menu-text-special");
 const socialMenuBtn = document.querySelector(".menu-text-social");
 
-// Image Change variable
 const imageChange = document.querySelector(".section-3-family-img");
 
-// Content to change variables
 const familyContent = document.querySelector(".section-3-family-content");
 const specialContent = document.querySelector(".section-3-special-content");
 const socialContent = document.querySelector(".section-3-social-content");
 
-// Line Variables
 const familyLine = document.querySelector(".line-family");
 const specialLine = document.querySelector(".line-special");
 const socialLine = document.querySelector(".line-social");
 
 const familyMenuText = document.querySelector(".menu-text-family");
 
-// Section 3 Menu Functions
 function familyBtnChanges() {
   familyContent.classList.remove("hidden");
   specialContent.classList.add("hidden");
@@ -64,26 +59,21 @@ function socialBtnChanges() {
     "url(./images/homepage/social-events-desktop.jpg)";
 }
 
-// Section 3 Event Listeners
+
 familyMenuBtn.addEventListener("click", () => {
   familyBtnChanges();
 });
-
 specialMenuBtn.addEventListener("click", () => {
   specialBtnChanges();
 });
-
 socialMenuBtn.addEventListener("click", () => {
   socialBtnChanges();
 });
 
-// Contact Form Submission
-const contactForm = document.getElementById("contactForm");
 
+const contactForm = document.getElementById("contactForm");
 contactForm.addEventListener("submit", function(event) {
-  event.preventDefault(); // Prevent form submission
-  
-  // Display alert message
+  event.preventDefault();
   alert("Form submitted successfully!");
   contactForm.reset()
 });

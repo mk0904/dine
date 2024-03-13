@@ -1,24 +1,24 @@
-// Variables Function Name and Email
-const nameWrapper = document.getElementById("name-wrapper");
-const nameError = document.getElementById("error-name");
+// Variables Name, Email
+const nameWrapper = document.querySelector("#name-wrapper");
+const nameError = document.querySelector("#error-name");
 
-const emailWrapper = document.getElementById("email-wrapper");
-const emailError = document.getElementById("error-email");
+const emailWrapper = document.querySelector("#email-wrapper");
+const emailError = document.querySelector("#error-email");
 
-// Variables Function Date and Time
-const dateWrapper = document.getElementById("date-wrapper");
-const dateError = document.getElementById("error-date");
-const datePastError = document.getElementById("error-past-date");
+// Variables Date, Time
+const dateWrapper = document.querySelector("#date-wrapper");
+const dateError = document.querySelector("#error-date");
+const datePastError = document.querySelector("#error-past-date");
 
-const timeWrapper = document.getElementById("time-wrapper");
-const timeError = document.getElementById("error-time");
+const timeWrapper = document.querySelector("#time-wrapper");
+const timeError = document.querySelector("#error-time");
 
 let futureDate = true;
 
 function checkFutureDate() {
-  let month = document.getElementById("month").value;
-  let day = document.getElementById("day").value;
-  let year = document.getElementById("year").value;
+  let month = document.querySelector("#month").value;
+  let day = document.querySelector("#day").value;
+  let year = document.querySelector("#year").value;
 
   let currentDay = new Date().getDate();
   let currentMonth = new Date().getMonth() + 1;
@@ -36,17 +36,17 @@ function checkFutureDate() {
   }
 }
 
-// Validation Function Name and Email
+// Validation Form
 function validateForm() {
   let valid = true;
-  let name = document.getElementById("name").value;
-  let email = document.getElementById("email").value;
-  let month = document.getElementById("month").value;
-  let day = document.getElementById("day").value;
-  let year = document.getElementById("year").value;
-  let hour = document.getElementById("hour").value;
-  let minute = document.getElementById("minute").value;
-  let pmAm = document.getElementById("am_pm").value;
+  let name = document.querySelector("#name").value;
+  let email = document.querySelector("#email").value;
+  let month = document.querySelector("#month").value;
+  let day = document.querySelector("#day").value;
+  let year = document.querySelector("#year").value;
+  let hour = document.querySelector("#hour").value;
+  let minute = document.querySelector("#minute").value;
+  let pmAm = document.querySelector("#am_pm").value;
 
   if (name == "") {
     nameWrapper.classList.add("change");
@@ -80,8 +80,8 @@ function validateForm() {
   return valid;
 }
 
-// Min and Max Year to choose
-const year = document.getElementById("year");
+// Min and Max Year
+const year = document.querySelector("#year");
 
 const today = new Date().getFullYear();
 const future = new Date().getFullYear() + 1;
@@ -89,17 +89,16 @@ const future = new Date().getFullYear() + 1;
 year.setAttribute("min", today);
 year.setAttribute("max", future);
 
-// Increase and Decrease people reservation
-const minusBtn = document.getElementById("minus");
-const plusBtn = document.getElementById("plus");
-const numPeople = document.getElementById("num-people");
-const errorPeople = document.getElementById("error-num-people");
+
+const minusBtn = document.querySelector("#minus");
+const plusBtn = document.querySelector("#plus");
+const numPeople = document.querySelector("#num-people");
+const errorPeople = document.querySelector("#error-num-people");
 
 function totalClick(click) {
   const sumvalue = parseInt(numPeople.innerText) + click;
   numPeople.innerText = sumvalue;
 
-  // avoid negatives
   if (sumvalue < 0) {
     numPeople.innerText = 0;
     errorPeople.classList.add("hidden");
@@ -113,7 +112,7 @@ function totalClick(click) {
   }
 }
 
-const modalContainer = document.getElementById("modal-container");
+const modalContainer = document.querySelector("#modal-container");
 const reservationButton = document.querySelector(".reservation-btn");
 
 function showModal() {
@@ -127,18 +126,16 @@ function hideModal() {
 reservationButton.addEventListener("click", function(event) {
   event.preventDefault();
   if (validateForm()) {
-    // Get input values
-    const name = document.getElementById("name").value;
-    const month = document.getElementById("month").value;
-    const day = document.getElementById("day").value;
-    const year = document.getElementById("year").value;
-    const hour = document.getElementById("hour").value;
-    const minute = document.getElementById("minute").value;
-    const amPm = document.getElementById("am_pm").value; // Get AM/PM value
-    const numPeople = document.getElementById("num-people").innerText;
-    const email = document.getElementById("email").value;
+    const name = document.querySelector("#name").value;
+    const month = document.querySelector("#month").value;
+    const day = document.querySelector("#day").value;
+    const year = document.querySelector("#year").value;
+    const hour = document.querySelector("#hour").value;
+    const minute = document.querySelector("#minute").value;
+    const amPm = document.querySelector("#am_pm").value;
+    const numPeople = document.querySelector("#num-people").innerText;
+    const email = document.querySelector("#email").value;
 
-    // Update modal content
     const modalName = document.querySelector(".modal-name");
     modalName.innerText = name;
 
@@ -146,7 +143,7 @@ reservationButton.addEventListener("click", function(event) {
     modalDate.innerText = `${month}/${day}/${year}`;
 
     const modalTime = document.querySelector(".modal-time");
-    modalTime.innerText = `${hour}:${minute} ${amPm}`; // Include AM/PM value
+    modalTime.innerText = `${hour}:${minute} ${amPm}`;
 
     const modalPeople = document.querySelector(".modal-people");
     modalPeople.innerText = numPeople;
@@ -160,7 +157,7 @@ reservationButton.addEventListener("click", function(event) {
 });
 
 
-const contactForm = document.getElementById("contactForm");
+const contactForm = document.querySelector("#contactForm");
 contactForm.addEventListener("submit", function(event) {
   event.preventDefault();
   alert("Form Submitted successfully!");
